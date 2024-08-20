@@ -1,0 +1,19 @@
+body{
+    font-family: 'monospace', sans-serif;
+    background-image: url("resources/fon.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+
+}
+.container{
+    display: flex; 
+    justify-content: center;
+    margin: 2%;
+    padding: 2%;
+    background: rgba(255, 255, 255, 0.5);
+}
+table, tr, th, td{
+    border: solid 1px;
+}
