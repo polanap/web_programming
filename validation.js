@@ -1,14 +1,15 @@
 function validation(){
-    let x  = $("#x");
-    let y = $("#y");
-    let R = $("R");
+
+    let x  = parseInt(document.querySelector("#x").value, 10);
+    let y = document.querySelector("#y").value.replace(',', '.');
+    let R = parseInt(document.querySelector("#R").value, 10);
     let flag = true;
     let invalid = [];
     if (![-3, -2, -1, 0, 1, 2, 3, 4, 5].includes(x)){
         invalid.push("x");
         flag = false;
     }
-    if (!/^\d+([\.,]\d+)?$/.test(y) || y<= -5 || y>=3){
+    if (!/^-?\d+(\.\d+)?$/.test(y) || y<= -5 || y>=3){
         invalid.push("y");
         flag = false;
     }
@@ -17,14 +18,16 @@ function validation(){
         flag = false;
     }
     let message = ""
-    if(invalid.length() == 1){
+    if(invalid.length == 1){
         message = "Недопустимое значение переменной "+invalid[0];
     }
-    else if(invalid.length() > 1){
+    else if(invalid.length > 1){
         message = "Недопустимое значение переменных "+invalid.join(" ");
     }
     if(flag){
+        alert("meoooooow")
         responder();
+        
     }
     else{
         // let errWind = document.createElement('div');
@@ -33,11 +36,9 @@ function validation(){
         alert(message);
 
     }
-
-
 }
 
-function responder (){
+function responder(){
     $('#form').submit(function(e) {
         e.preventDefault();
         $.ajax({
@@ -60,4 +61,6 @@ function responder (){
      });
 }
 
-document.addEventListener('DOMContentLoaded', validation());
+document.addEventListener('DOMContentLoaded', function() {
+	document.getElementById('submitForm').addEventListener('click', validation);
+});
