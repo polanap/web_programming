@@ -1,5 +1,5 @@
-function validation(){
-
+function validation(e){
+    e.preventDefault();
     let x  = parseInt(document.querySelector("#x").value, 10);
     let y = document.querySelector("#y").value.replace(',', '.');
     let R = parseInt(document.querySelector("#R").value, 10);
@@ -25,9 +25,23 @@ function validation(){
         message = "Недопустимое значение переменных "+invalid.join(" ");
     }
     if(flag){
-        alert("meoooooow")
-        responder();
-        
+        $.ajax({
+            type: "GET",
+            url: 'submit_form.php',
+            data: $('#form').serialize(),
+            success: function(response)
+            {
+                let obj = JSON.parse(response);
+                let html = [];
+                html.push('<tr>');
+                for (let i in obj) {
+                    html.push('<td>'+obj[i]+'</td>');
+                }
+                html.push('</tr>');
+
+                document.getElementById('resultTable').innerHTML += html.join('');
+           }
+       });
     }
     else{
         // let errWind = document.createElement('div');
@@ -39,12 +53,12 @@ function validation(){
 }
 
 function responder(){
-    $('#form').submit(function(e) {
+    //$('#form').submit(function(e) {
         e.preventDefault();
         $.ajax({
             type: "GET",
             url: 'submit_form.php',
-            data: $(this).serialize(),
+            data: $('#form').serialize(),
             success: function(response)
             {
                 let obj = JSON.parse(response);
@@ -58,7 +72,7 @@ function responder(){
                 $('#resultTable').innerHTML += html.join('');
            }
        });
-     });
+    // });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
