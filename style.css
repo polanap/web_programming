@@ -1,19 +1,60 @@
 body{
     font-family: 'monospace', sans-serif;
-    background-image: url("resources/fon.jpg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    height: 100%;
+    background-image: url("resources/fon.jpg"); 
+    text-align: center;
+
+}
+body > table{
+    display: flex;
+    justify-content: center;
+    
+}
+
+body > table > tr{
+    display: block;
+    text-align: center;
+}
+
+td:has(> .container){
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
 
 }
 .container{
-    display: flex; 
+    display: inline-block;
+    vertical-align: top;
     justify-content: center;
     margin: 2%;
-    padding: 2%;
+    padding: 5%;
+    /* border-radius: 10%; */
     background: rgba(255, 255, 255, 0.5);
+    position: relative;
 }
-table, tr, th, td{
-    border: solid 1px;
+
+#resultTable {
+    width: 100%;
+    margin-bottom: 20px;
+    border: 1px solid #dddddd;
+    border-collapse: collapse; 
+}
+#resultTable th {
+    font-weight: bold;
+    padding: 5px;
+    background: #efefef;
+    border: 1px solid #dddddd;
+}
+#resultTable td {
+    border: 1px solid #dddddd;
+    padding: 5px;
+}
+
+img{
+    border-radius: inherit;
+}
+
+.values{
+    border:  1px solid #dddddd;
+    padding: 5px;
+    background: rgb(255, 255, 255);
 }

@@ -21,10 +21,14 @@ $x = $_GET['x'];
 $y = $_GET['y'];
 $R = $_GET['R'];
 $result = check($x, $y, $R) ? 'внутри' : 'снаружи';
+
 $currentTime = date("d-m-Y H:i:s"); 
 $executionTime = number_format(microtime(true) - $start, 10, '.', '');
 
 $output = ['x' => $x, 'y' => $y, 'R' => $R, 'result' => $result, 'currentTime' => $currentTime, 'executionTime'=> $executionTime,];
 exit(json_encode($output));
 
+
+
 ?>
+
