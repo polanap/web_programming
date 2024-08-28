@@ -2,6 +2,9 @@ body{
     font-family: 'monospace', sans-serif;
     background-image: url("resources/fon.jpg"); 
     text-align: center;
+    background-attachment: fixed;
+    background-size: cover;
+
 
 }
 body > table{
@@ -25,15 +28,27 @@ td:has(> .container){
     display: inline-block;
     vertical-align: top;
     justify-content: center;
-    margin: 2%;
-    padding: 5%;
-    /* border-radius: 10%; */
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
     background: rgba(255, 255, 255, 0.5);
     position: relative;
 }
 
+th > .container{
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+table.lay2 td{
+    margin: 10px;
+    padding: 10px;
+}
+
+
 #resultTable {
-    width: 100%;
+    table-layout:fixed; 
+    width:700px;
     margin-bottom: 20px;
     border: 1px solid #dddddd;
     border-collapse: collapse; 
@@ -43,10 +58,13 @@ td:has(> .container){
     padding: 5px;
     background: #efefef;
     border: 1px solid #dddddd;
+    overflow:hidden;
 }
 #resultTable td {
     border: 1px solid #dddddd;
     padding: 5px;
+    overflow:hidden;
+
 }
 
 img{
@@ -56,5 +74,19 @@ img{
 .values{
     border:  1px solid #dddddd;
     padding: 5px;
-    background: rgb(255, 255, 255);
+    background: #efefef;
+}
+select, input{
+    table-layout:fixed; 
+    width: 100px;
+    height: 30px;
+    background: #efefef;
+    border: 1px solid #dddddd;
+    padding: 3px;
+}
+
+#submitForm{
+    background: rgba(189, 226, 245, 1);
+    border: 2px solid rgb(140, 184, 229);
+    border-radius: 10px;
 }
