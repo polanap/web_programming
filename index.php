@@ -14,23 +14,28 @@
                         <th>
                                 <div class="container">
                                         <h1>Labwork#1<sub>12345</sub></h1>
-                                        <h2>Выполнила студент группы Р3109<br>Напольская Полина Александровна</br>
+                                        <h2>Выполнила студент группы Р3209<br>Напольская Полина Александровна</br>
                                 </div>
                         </th>                        
                 </tr>
                 <tr>
                         <td>
                                 <div class="container">
-                                        <table id="resultTable">
-                                                <tr>
-                                                        <th>X</th>
-                                                        <th>Y</th>
-                                                        <th>R</th>
-                                                        <th>Результат</th>
-                                                        <th>Текущее время</th>
-                                                        <th>Время работы</th>
-                                                </tr>
-                                        </table>
+                                        <table class="resultTable">
+                                                        <tr>
+                                                                <th>X</th>
+                                                                <th>Y</th>
+                                                                <th>R</th>
+                                                                <th>Результат</th>
+                                                                <th>Текущее время</th>
+                                                                <th>Время работы</th>
+                                                        </tr>
+                                                </table>
+                                        <div class = "scrollbox">
+                                                <table class="resultTable" id="resultTable">
+                                                        
+                                                </table>
+                                        </div>
                                 </div>
                         </td>
                         <td>

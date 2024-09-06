@@ -22,8 +22,16 @@ td:has(> .container){
     display: inline-block;
     vertical-align: top;
     text-align: center;
-
+    width: 40vw;
+    padding: 5px;
 }
+
+th:has(> .container){
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+}
+
 .container{
     display: inline-block;
     vertical-align: top;
@@ -33,11 +41,16 @@ td:has(> .container){
     border-radius: 10px;
     background: rgba(255, 255, 255, 0.5);
     position: relative;
+
 }
 
 th > .container{
     padding-left: 50px;
     padding-right: 50px;
+}
+
+td > .container{
+    height: 560px;
 }
 
 table.lay2 td{
@@ -46,21 +59,21 @@ table.lay2 td{
 }
 
 
-#resultTable {
+.resultTable {
     table-layout:fixed; 
-    width:700px;
-    margin-bottom: 20px;
+    width: 700px;
+    /* margin-bottom: 20px; */
     border: 1px solid #dddddd;
     border-collapse: collapse; 
 }
-#resultTable th {
+.resultTable th {
     font-weight: bold;
     padding: 5px;
     background: #efefef;
     border: 1px solid #dddddd;
     overflow:hidden;
 }
-#resultTable td {
+.resultTable td {
     border: 1px solid #dddddd;
     padding: 5px;
     overflow:hidden;
@@ -78,8 +91,8 @@ img{
 }
 select, input{
     table-layout:fixed; 
-    width: 100px;
-    height: 30px;
+    width: 20%;
+    height: 10%;
     background: #efefef;
     border: 1px solid #dddddd;
     padding: 3px;
@@ -90,3 +103,31 @@ select, input{
     border: 2px solid rgb(140, 184, 229);
     border-radius: 10px;
 }
+.scrollbox {
+    
+    border-radius: 8px;
+    width: 100%;
+    height: 90%;
+    overflow-y: auto;
+    /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
+}
+
+        /* Scrollbar Styles */
+        .scrollbox::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .scrollbox::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .scrollbox::-webkit-scrollbar-thumb {
+            background: rgb(062, 129, 159);
+            border-radius: 10px;
+        }
+
+        .scrollbox::-webkit-scrollbar-thumb:hover {
+            background: rgb(062, 129, 159);
+        }
+

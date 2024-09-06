@@ -44,16 +44,12 @@ function validation(e){
        });
     }
     else{
-        // let errWind = document.createElement('div');
-        // errWind.textContent = message;
-        // errWind.style.
         alert(message);
 
     }
 }
 
 function responder(){
-    //$('#form').submit(function(e) {
         e.preventDefault();
         $.ajax({
             type: "GET",
@@ -72,7 +68,6 @@ function responder(){
                 $('#resultTable').innerHTML += html.join('');
            }
        });
-    // });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
