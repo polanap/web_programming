@@ -1,27 +1,46 @@
 package web;
+import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 
 import com.fastcgi.FCGIInterface;
 import java.time.LocalDateTime;
 import java.util.Properties;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
         var fcgiInterface = new FCGIInterface();
-        while (fcgiInterface.FCGIaccept() >= 0) {
-            Properties params = FCGIInterface.request.params;
-            int x = Integer.parseInt(params.getProperty("x"));
-            float y = Float.parseFloat(params.getProperty("y"));
-            int R = Integer.parseInt(params.getProperty("R"));
-            var content = submit(x, y, R);
-            var httpResponse = """
-            HTTP/1.1 200 OK
-            Content-Type: application/json
-            Content-Length: %d
-            %s
-            """.formatted(content.getBytes(StandardCharsets.UTF_8).length, content);
-            System.out.println(httpResponse);
-        }
+        var stderr = System.err;
+        String HERNIYA = "123";
+            while (fcgiInterface.FCGIaccept() >= 0) {
+                try{
+                Properties params = FCGIInterface.request.params;
+                var queryString = params.getProperty("QUERY_STRING");
+                var queryParams = queryString.split("&");
+                int x = Integer.parseInt(queryParams[0].replaceAll(".=", ""));
+                float y = Float.parseFloat(queryParams[1].replaceAll(".=", ""));
+                int R = Integer.parseInt(queryParams[2].replaceAll(".=", ""));
+                
+                var content = submit(x, y, R);
+                var httpResponse = """
+                HTTP/1.1 200 OK
+                Content-Type: application/json
+                Content-Length: %d
+
+                %s
+                """.formatted(content.getBytes(StandardCharsets.UTF_8).length, content);
+                System.out.println(httpResponse);
+            }catch (Exception e){
+                System.setErr(stderr);
+                System.err.println(e.getMessage());
+                System.err.println(HERNIYA);
+                e.printStackTrace();
+            }
+            }
+
+
+        
+        
     }
 
     private static boolean check(int x, float y, int R){
@@ -44,14 +63,15 @@ public class Main {
         var dateTime = LocalDateTime.now();
         long endTime = System.nanoTime();
         long duration = (endTime - startTime);
+
         return """
         {
-            "x":%s,
-            "y":%s,
-            "R":%s,
-            "result":%s,
-            "currentTime":%s,
-            "executionTime":%s
+            "x":"%s",
+            "y":"%s",
+            "R":"%s",
+            "result":"%s",
+            "currentTime":"%s",
+            "executionTime":"%s"
         }
         """.formatted(x, y, R, result, dateTime, duration);
 

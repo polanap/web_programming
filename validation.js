@@ -26,22 +26,29 @@ function validation(e){
     }
     if(flag){
         $.ajax({
-            type: "GET",
-            url: 'submit_form.php',
+            method:'get',
+            url: '/fcgi-bin/server.jar',
+            dataType:'json',
             data: $('#form').serialize(),
             success: function(response)
             {
-                let obj = JSON.parse(response);
+                let obj = response;
                 let html = [];
                 html.push('<tr>');
                 for (let i in obj) {
                     html.push('<td>'+obj[i]+'</td>');
                 }
                 html.push('</tr>');
-
+ 
                 document.getElementById('resultTable').innerHTML += html.join('');
-           }
-       });
+           },
+           error: function(response)
+           {
+               alert("ошибочка(((");
+          }
+            });
+            
+            
     }
     else{
         alert(message);
@@ -49,26 +56,26 @@ function validation(e){
     }
 }
 
-function responder(){
-        e.preventDefault();
-        $.ajax({
-            type: "GET",
-            url: 'submit_form.php',
-            data: $('#form').serialize(),
-            success: function(response)
-            {
-                let obj = JSON.parse(response);
-                let html = [];
-                html.push('<tr>');
-                for (let i in obj) {
-                    html.push('<td>'+obj[i]+'</td>');
-                }
-                html.push('</tr>');
+// function responder(){
+//         e.preventDefault();
+//         $.ajax({
+//             type: "GET",
+//             url: 'fcgi-bin/server.jar',
+//             data: $('#form').serialize(),
+//             success: function(response)
+//             {
+//                 let obj = JSON.parse(response);
+//                 let html = [];
+//                 html.push('<tr>');
+//                 for (let i in obj) {
+//                     html.push('<td>'+obj[i]+'</td>');
+//                 }
+//                 html.push('</tr>');
 
-                $('#resultTable').innerHTML += html.join('');
-           }
-       });
-}
+//                 $('#resultTable').innerHTML += html.join('');
+//            }
+//        });
+// }
 
 document.addEventListener('DOMContentLoaded', function() {
 	document.getElementById('submitForm').addEventListener('click', validation);
