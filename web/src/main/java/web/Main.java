@@ -5,6 +5,8 @@ import java.nio.charset.StandardCharsets;
 import com.fastcgi.FCGIInterface;
 import java.time.LocalDateTime;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.*;
 
 public class Main {
@@ -16,10 +18,31 @@ public class Main {
                 try{
                 Properties params = FCGIInterface.request.params;
                 var queryString = params.getProperty("QUERY_STRING");
-                var queryParams = queryString.split("&");
-                int x = Integer.parseInt(queryParams[0].replaceAll(".=", ""));
-                float y = Float.parseFloat(queryParams[1].replaceAll(".=", ""));
-                int R = Integer.parseInt(queryParams[2].replaceAll(".=", ""));
+                Pattern xPattern = Pattern.compile("[&^]x=(?<x>[^&]*)");
+                Pattern yPattern = Pattern.compile("[&^]y=(?<y>[^&]*)");
+                Pattern rPattern = Pattern.compile("[&^]R=(?<R>[^&]*)");
+
+                int x = 0;
+                float y = 0;
+                int R = 0;
+
+                Matcher xMatcher = xPattern.matcher(queryString);
+                if (xMatcher.find()) {
+                    x = Integer.parseInt(xMatcher.group("x"));
+                }
+                Matcher yMatcher = yPattern.matcher(queryString);
+                if (yMatcher.find()) {
+                    y = Float.parseFloat(yMatcher.group("y"));
+                }
+                Matcher rMatcher = rPattern.matcher(queryString);
+                if (rMatcher.find()) {
+                    R = Integer.parseInt(rMatcher.group("R"));
+                }
+
+                // var queryParams = queryString.split("&");
+                // int x = Integer.parseInt(queryParams[0].replaceAll(".=", ""));
+                // float y = Float.parseFloat(queryParams[1].replaceAll(".=", ""));
+                // int R = Integer.parseInt(queryParams[2].replaceAll(".=", ""));
                 
                 var content = submit(x, y, R);
                 var httpResponse = """
