@@ -1,7 +1,7 @@
 function validation(e){
     e.preventDefault();
     let x  = parseInt(document.querySelector("#x").value, 10);
-    let y = document.querySelector("#y").value.replace(',', '.');
+    let y = document.querySelector("#y").value;
     let R = parseInt(document.querySelector("#R").value, 10);
     let flag = true;
     let invalid = [];
@@ -26,8 +26,8 @@ function validation(e){
     }
     if(flag){
         $.ajax({
-            method:'get',
-            url: '/fcgi-bin/server.jar',
+            method:'post',
+            url: '/controller',
             dataType:'json',
             data: $('#form').serialize(),
             success: function(response)
