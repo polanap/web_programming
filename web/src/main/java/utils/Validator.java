@@ -1,4 +1,4 @@
-package web;
+package utils;
 
 public class Validator {
 
