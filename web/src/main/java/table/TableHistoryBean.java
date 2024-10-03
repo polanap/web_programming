@@ -1,4 +1,4 @@
-package web;
+package table;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,5 +14,5 @@ import java.util.List;
 public class TableHistoryBean implements Serializable {
     @Getter
     @Setter
-    private List<String> history = new ArrayList<>();
+    private List<TableRow> history = new ArrayList<>();
 }

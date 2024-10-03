@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<jsp:useBean id="history" class="web.TableHistoryBean" scope="session" />
+<jsp:useBean id="history" class="table.TableHistoryBean" scope="session" />
 <!DOCTYPE html>
 <html>
 
@@ -18,8 +18,7 @@
                         <th>
                                 <div class="container">
                                         <h1>Labwork#1<sub>409218</sub></h1>
-                                        <h2>Выполнила студент группы Р3209<br>Напольская Полина
-                                                Александровна</br>
+                                        <h2>Выполнила студент группы Р3209 Напольская Полина Александровна</h2>
                                 </div>
                         </th>
                 </tr>
