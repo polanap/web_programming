@@ -1,10 +1,10 @@
 package servlets;
 
 import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import table.TableHistoryBean;
 import utils.Checker;
@@ -36,7 +36,7 @@ public class AreaCheckServlet extends HttpServlet{
                 float yPar = Float.parseFloat(y);
                 int rPar = Integer.parseInt(R);
                 long startTime = System.nanoTime();
-                String result = checker.check(xPar, yPar, rPar) ? "внутри" : "снаружи";
+                String result = checker.check(xPar, yPar, rPar) ? "inner" : "outer";
                 var dateTime = LocalDateTime.now();
                 long endTime = System.nanoTime();
                 float duration = (endTime - startTime);

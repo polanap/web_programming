@@ -27,7 +27,7 @@ function validation(e){
     if(flag){
         $.ajax({
             method:'post',
-            url: '/controller',
+            url: 'controller',
             dataType:'json',
             data: $('#form').serialize(),
             success: function(response)

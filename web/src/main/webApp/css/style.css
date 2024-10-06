@@ -1,6 +1,6 @@
 body{
     font-family: 'monospace', sans-serif;
-    background-image: url("resources/fon.jpg"); 
+    background-image: url("../resources/fon.jpg"); 
     text-align: center;
     background-attachment: fixed;
     background-size: cover;

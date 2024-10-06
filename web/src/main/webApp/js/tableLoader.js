@@ -1,7 +1,7 @@
 function getTableHistory(e){
     $.ajax({
         method:'get',
-        url: '/controller',
+        url: 'controller',
         dataType:'json',
         success: function(response)
         {

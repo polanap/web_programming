@@ -21,10 +21,12 @@
         <servlet-name>AreaCheckServlet</servlet-name>
         <url-pattern>/model</url-pattern>
     </servlet-mapping>
-    <jsp-config>
-        <taglib>
-            <taglib-uri>index</taglib-uri>
-            <taglib-location>index.jsp</taglib-location>
-        </taglib>
-    </jsp-config>
+    <servlet>
+        <servlet-name>index</servlet-name>
+        <jsp-file>web/src/main/webApp/index.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+            <servlet-name>index</servlet-name>
+            <url-pattern>/index</url-pattern>
+    </servlet-mapping>
 </web-app>
