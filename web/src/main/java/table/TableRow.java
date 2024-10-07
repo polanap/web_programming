@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import java.time.LocalDateTime;
 
 import java.io.Serializable;
 
@@ -13,20 +12,20 @@ import java.io.Serializable;
 public class TableRow implements Serializable {
     @Getter
     @Setter
-    private int x;
+    private double x;
     @Getter
     @Setter
-    private float y;
+    private double y;
     @Getter
     @Setter
-    private int R;  
+    private double R;  
     @Getter
     @Setter
-    private String result;
+    private String resultData;
     @Getter
     @Setter
-    private LocalDateTime currentTime;
+    private String currentTime;
     @Getter
     @Setter
-    private float executionTime;      
+    private double executionTime;      
 }

@@ -80,9 +80,19 @@ table.lay2 td{
 
 }
 
-img{
+/* img{
     border-radius: inherit;
-}
+} */
+
+.graph-container {
+    display: grid;
+    justify-content: center;
+  }
+  
+.graph-container > * {
+    grid-column-start: 1;
+    grid-row-start: 1;
+  }
 
 .values{
     border:  1px solid #dddddd;

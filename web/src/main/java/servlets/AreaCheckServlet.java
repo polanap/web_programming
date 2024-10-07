@@ -5,10 +5,15 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import table.TableHistoryBean;
+import table.TableRow;
 import utils.Checker;
+import utils.Request;
 import utils.Validator;
+import java.io.BufferedReader;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -25,44 +30,69 @@ public class AreaCheckServlet extends HttpServlet{
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
-        String x = request.getParameter("x");
-        String y = request.getParameter("y");
-        String R = request.getParameter("R");
         String message = "";
         try{
+           
+            String x = request.getAttribute("x").toString();
+            String y = request.getAttribute("y").toString();
+            String R = request.getAttribute("R").toString();
+
             if (validator.validate(x, y, R)){
-                int xPar = Integer.parseInt(x);
-                float yPar = Float.parseFloat(y);
-                int rPar = Integer.parseInt(R);
+                double xPar = Double.parseDouble(x);
+                double yPar = Double.parseDouble(y);
+                double rPar = Double.parseDouble(R);
+
                 long startTime = System.nanoTime();
                 String result = checker.check(xPar, yPar, rPar) ? "inner" : "outer";
                 var dateTime = LocalDateTime.now();
                 long endTime = System.nanoTime();
                 float duration = (endTime - startTime);
+
+                var row = new TableRow();
+                row.setX(xPar);
+                row.setY(yPar);
+                row.setR(rPar);
+                row.setResultData(result);
+                row.setCurrentTime(dateTime.toString());
+                row.setExecutionTime(duration/1000000);
+
+                var session = request.getSession();
+                TableHistoryBean history = (TableHistoryBean)session.getAttribute("history");
+                var newHistory = history.getHistory();
+                newHistory.add(row);
+                history.setHistory(newHistory);
+                
+
                 message =  """
                 {
                     "x":"%s",
                     "y":"%s",
                     "R":"%s",
-                    "result":"%s",
+                    "resultData":"%s",
                     "currentTime":"%s",
                     "executionTime":"%s"
                 }
-                """.formatted(x, y, R, result, dateTime, String.format("%.10f", duration/1000000));
+                """.formatted(x, y, R, result, dateTime.toString(), String.format("%.10f", duration/1000000));
                 response.setStatus(200);
+            }else{
+                message = """
+                {
+                    "error" : "invalid data"
+                }
+                """;
+            response.setStatus(400);
             }
         }catch(Exception e){
             message = """
                 {
-                    "error" : "%s"
+                    "error" : "%s | %s"
                 }
-                """.formatted(e.getMessage());
+                """.formatted(e, e.getMessage());
             response.setStatus(400);
         }
         PrintWriter writer = response.getWriter();
         writer.println(message);
-        response.setContentLength(message.length());
+        // response.setContentLength(message.length());
         response.setContentType("application/json");
         writer.close();     
         

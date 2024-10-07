@@ -2,7 +2,7 @@ package utils;
 
 public class Checker {
     
-    public boolean check(int x, float y, int R){
+    public boolean check(double x, double y, double R){
         if (x < 0 && y > 0 && x*x+y*y <= R*R){
             return true;
         }
