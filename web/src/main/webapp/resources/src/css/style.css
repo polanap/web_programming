@@ -1,6 +1,6 @@
 body{
     font-family: 'monospace', sans-serif;
-    background-image: url("../resources/fon.jpg"); 
+    background-image: url("../images/fon.jpg"); 
     text-align: center;
     background-attachment: fixed;
     background-size: cover;
@@ -22,7 +22,7 @@ td:has(> .container){
     display: inline-block;
     vertical-align: top;
     text-align: center;
-    width: 40vw;
+    width: 45vw;
     padding: 5px;
 }
 
@@ -58,22 +58,38 @@ table.lay2 td{
     padding: 10px;
 }
 
+.container:has(> #clock){
+    display: inline-block;
+    vertical-align: top;
+    justify-content: center;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 200px;
+    background: rgba(255, 255, 255, 0.5);
+    position: relative;
+    width: 200px;
+    height: 200px;
 
-.resultTable {
+}
+#clock{
+    height: 100%;
+}
+
+table:has(> thead) {
     table-layout:fixed; 
-    width: 700px;
+    width: 100%;
     /* margin-bottom: 20px; */
     border: 1px solid #dddddd;
     border-collapse: collapse; 
 }
-.resultTable th {
+table:has(> thead) thead th {
     font-weight: bold;
     padding: 5px;
     background: #efefef;
     border: 1px solid #dddddd;
     overflow:hidden;
 }
-.resultTable td {
+table:has(> thead) tbody td {
     border: 1px solid #dddddd;
     padding: 5px;
     overflow:hidden;
@@ -102,16 +118,38 @@ table.lay2 td{
 select, input{
     table-layout:fixed; 
     width: 20%;
-    height: 10%;
+    height: 30px;
     background: #efefef;
     border: 1px solid #dddddd;
     padding: 3px;
+    margin: 10px
 }
 
-#submitForm{
+#form\:submit{
     background: rgba(189, 226, 245, 1);
     border: 2px solid rgb(140, 184, 229);
     border-radius: 10px;
+}
+#form\:submit:hover{
+    background: rgb(255, 226, 187);
+    border: 2px solid rgb(242, 206, 176);
+}
+#form\:submit:active{
+    background: rgb(242, 206, 176);
+}
+#go-to-index-button{
+    width: 200px;
+    height: 40px;
+    background: rgba(189, 226, 245, 1);
+    border: 2px solid rgb(140, 184, 229);
+    border-radius: 30px;
+}
+#go-to-index-button:hover{
+    background: rgb(255, 226, 187);
+    border: 2px solid rgb(242, 206, 176);
+}
+#go-to-index-button:active{
+    background: rgb(242, 206, 176);
 }
 .scrollbox {
     
@@ -141,3 +179,24 @@ select, input{
             background: rgb(062, 129, 159);
         }
 
+#pageMessages {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    width: 30%;
+}
+
+.alert {
+    position: relative;
+}
+
+.alert .close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 1em;
+}
+
+.alert .fa {
+    margin-right:.3em;
+}

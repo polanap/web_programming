@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<h:head>
+    <title>Labwork #1</title>
+    <link rel="stylesheet" type="text/css" href="resources/src/css/style.css"/>
+    <script
+        src="https://code.jquery.com/jquery-3.6.3.js"
+        integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+        crossorigin="anonymous">
+    </script>
+    <h:outputScript library="src" name="js/dotPrinter.js"/>
+</h:head>
+<h:body>
+    <table class="lay1">
+        <tr>
+            <th>
+                <div class="container">
+                    <h1>Labwork#3<sub>232323</sub></h1>
+                    <h2>Выполнила студент группы Р3209 Напольская Полина Александровна</h2>
+                </div>
+            </th>
+        </tr>
+        <tr>
+            <td>
+                <div class="container scrollbox">
+                    <h:panelGroup id="resultTable">
+                        <h:dataTable value="#{table.getHistory()}" var="row">
+                            <h:column>
+                                <f:facet name="header">X</f:facet>
+                                <h:outputText value="#{row.x}" >
+                                    <f:convertNumber maxFractionDigits="4" />
+                                </h:outputText>
+                            </h:column>
+                
+                            <h:column>
+                                <f:facet name="header">Y</f:facet>
+                                <h:outputText value="#{row.y}" >
+                                    <f:convertNumber maxFractionDigits="4" />
+                                </h:outputText>
+                            </h:column>
+                
+                            <h:column>
+                                <f:facet name="header">R</f:facet>
+                                <h:outputText value="#{row.r}" >
+                                    <f:convertNumber maxFractionDigits="4" />
+                                </h:outputText>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Результат</f:facet>
+                                <h:outputText value="#{row.resultData}" >
+                                    <f:convertNumber maxFractionDigits="4" />
+                                </h:outputText>
+                                
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Текущее время</f:facet>
+                                <h:outputText value="#{row.currentTime}" >
+                                    <f:converter converterId="localDataTimeConverter" />
+                                </h:outputText>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Время работы</f:facet>
+                                <h:outputText value="#{row.executionTime}" >
+                                    <f:convertNumber maxFractionDigits="5" />
+                                </h:outputText>
+                                
+                            </h:column>
+                        </h:dataTable>
+                    </h:panelGroup>
+                </div>
+            </td>
+            <td>
+                <div class="container">
+                    <table class="lay2">
+                        <tr>
+                            <td>
+                                <h:form id="form">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <h:outputScript library="src" name="js/notification.js"/>
+
+                                                <h:outputLabel for="x" value="x"/>
+                                                <h:inputText id="x" value="#{table.newRow.x}">
+                                                    <f:validateDoubleRange minimum="#{-table.newRow.r*1.5}" maximum="#{table.newRow.r*1.5}" />
+                                                </h:inputText>
+
+                                                <h:outputLabel for="y" value="y"/>
+                                                <h:inputText id="y" value="#{table.newRow.y}">
+                                                    <f:validateDoubleRange minimum="#{-table.newRow.r*1.5}" maximum="#{table.newRow.r*1.5}" />
+                                                </h:inputText>
+
+
+                                                <h:outputLabel for="R" value="R"/>
+                                                <h:selectOneMenu id="R" value="#{table.newRow.r}">
+                                                    <f:selectItem itemLabel="1" itemValue="1" />
+                                                    <f:selectItem itemLabel="2" itemValue="2" />
+                                                    <f:selectItem itemLabel="3" itemValue="3" />
+                                                    <f:selectItem itemLabel="4" itemValue="4" />
+                                                    <f:selectItem itemLabel="5" itemValue="5" />
+                                                </h:selectOneMenu>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h:commandButton id = "submit" value="Отправить" action="#{table.addNewRow()}" update="resultsTable graphPanel errx erry"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h:message class="btn btn-warning" for="x" display="text" id="errx"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h:message class="btn btn-warning" for="y" display="text" id="erry"/>
+                                            </td>
+                                        </tr>
+
+                                    </table>
+
+                                </h:form>
+                                <h:form style = "display: none" id = "formR">
+                                    <h:inputText id="hiddenR" value="#{table.newRow.r}"/>
+                                    <h:outputScript library="src" name="js/setR.js"/>
+                                    <h:commandButton id = "submitR" update="graphPanel"/>
+                                </h:form>
+                            </td>
+                        </tr>
+                        <tr>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="graph-container">
+                                    <p:panelGroup id="graphPanel">
+                                        <svg width="300" height="300" id="svg" onclick="getPoint(event)" xmlns="http://www.w3.org/2000/svg">
+                                            <polygon style="fill: black" points="150,0 145,15 155,15"></polygon>
+                                            <polygon style="fill: black" points="300,150 285,145 285,155"></polygon>
+                                        
+                                            <polygon style="stroke:rgb(242, 206, 176);opacity: 0.8; fill: rgb(255, 226, 187)" points="150,150 150,200 250,150"></polygon>
+                                        
+                                            <polygon style=" stroke:rgb(242, 206, 176);opacity: 0.8; fill: rgb(255, 226, 187)" points="100,150 150,150 150,250, 100,250"></polygon>
+                                            <path style=" stroke:rgb(242, 206, 176);opacity: 0.8; fill: rgb(255, 226, 187)" d="M 150,150 L50,150 A100,100 0 0 1 150,50 Z"></path>
+
+                                        
+                                            <text x="285" y="140">x</text>
+                                            <text x="160" y="15">y</text>
+                                        
+                                            <text x="40" y="145" id="-r">#{-table.newRow.r}</text>
+                                            <text x="85" y="145" id="-r2">#{-table.newRow.r/2}</text>
+                                            <text x="190" y="145" id="r2">#{table.newRow.r/2}</text>
+                                            <text x="245" y="145" id="r">#{table.newRow.r}</text>
+                                        
+                                            <text x="155" y="52.5" id="r">#{table.newRow.r}</text>
+                                            <text x="155" y="102.5" id="r2">#{table.newRow.r/2}</text>
+                                            <text x="155" y="202.5" id="-r2">#{-table.newRow.r/2}</text>
+                                            <text x="155" y="252.5" id="-r">#{-table.newRow.r}</text>
+                                        
+                                            <line style="stroke:#000;" x1="0" x2="300" y1="150" y2="150"></line>
+                                            <line  style="stroke:#000;" x1="150" x2="150" y1="0" y2="300"></line>
+                                            <ui:repeat value="#{table.getPartOfHistory(table.newRow.r)}" var="point">
+                                                <circle cx="#{point.x * 100 / point.r + 150}" cy="#{150 - (point.y * 100 /  point.r)}" stroke="black" fill="#{point.resultData eq 'inner' ? 'green' : 'red'}" class="point" r="3"/>
+                                            </ui:repeat>
+                                                                        
+                                        </svg> 
+                                    </p:panelGroup>
+                                
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </td>
+        </tr>
+    </table>
+</h:body>
+</html>
