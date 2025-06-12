@@ -1,12 +1,13 @@
 package web.beans;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import lombok.Data;
-
-import javax.management.MalformedObjectNameException;
+import javax.management.InstanceNotFoundException;
+import javax.management.MBeanRegistrationException;
 import javax.management.ObjectName;
 import java.io.Serializable;
 import java.lang.management.ManagementFactory;
@@ -18,14 +19,26 @@ import java.time.LocalDateTime;
 public class TableRowBean implements Serializable {
     @Inject
     AreaCalculator areaCalculator;
+    ObjectName areaCalculatorName;
 
     @PostConstruct
-    public void init(){
+    public void init() {
         try {
-            ObjectName areaCalculatorName = new ObjectName("web.beans:type=AreaCalculator");
+            areaCalculatorName = new ObjectName("web.beans:type=AreaCalculator");
+            System.out.println("------------------- START REGISTER BEAN -----------------------");
             ManagementFactory.getPlatformMBeanServer().registerMBean(areaCalculator, areaCalculatorName);
-        }catch (Exception e){
+            System.out.println("------------------- FINISH REGISTER BEAN -----------------------");
+        } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @PreDestroy
+    public void destroy() {
+        try {
+            ManagementFactory.getPlatformMBeanServer().unregisterMBean(areaCalculatorName);
+        } catch (InstanceNotFoundException | MBeanRegistrationException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -36,7 +49,7 @@ public class TableRowBean implements Serializable {
     private LocalDateTime currentTime;
     private double executionTime;
 
-    public TableRow toEntity(){
+    public TableRow toEntity() {
         TableRow entity = new TableRow();
         entity.setX(x);
         entity.setY(y);
@@ -47,7 +60,7 @@ public class TableRowBean implements Serializable {
         return entity;
     }
 
-    public void setR(double r){
+    public void setR(double r) {
         areaCalculator.calculateArea(r);
         this.r = r;
     }
