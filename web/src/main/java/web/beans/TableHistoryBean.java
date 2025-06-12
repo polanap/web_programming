@@ -1,5 +1,9 @@
 package web.beans;
 
+import jakarta.enterprise.context.Destroyed;
+import jakarta.enterprise.context.Initialized;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.enterprise.event.Observes;
 import lombok.NoArgsConstructor;
 import web.utils.Checker;
 import lombok.Data;
@@ -18,22 +22,29 @@ import jakarta.inject.Named;
 @Data
 @ApplicationScoped
 public class TableHistoryBean implements Serializable {
-    private TableRow newRow = new TableRow();
     private static Checker checker = new Checker();
     private TableRowDAO tableRowDAO = new TableRowDAO();
     private List<TableRow> history = tableRowDAO.getAttemptsList();
-    
+
+    @Inject
+    private TableRowBean newRow;
+
+    @Inject
+    PointTracker pointTracker;
+
     public void addNewRow(){
         setData();
-        history.add(newRow);
-        tableRowDAO.addAttempt(newRow);
+        history.add(newRow.toEntity());
+        tableRowDAO.addAttempt(newRow.toEntity());
         double x = newRow.getX();
         double y = newRow.getY();
         double R = newRow.getR();
-        newRow = new TableRow();
+//        newRow = new TableRowBean();
         newRow.setX(x);
         newRow.setY(y);
         newRow.setR(R);
+
+        pointTracker.addPoint(x, y, checker.check(x, y, R) );
     }
     
     public List<TableRow> getPartOfHistory(Double r){

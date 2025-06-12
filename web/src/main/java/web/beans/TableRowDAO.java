@@ -1,14 +1,11 @@
 package web.beans;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.SessionScoped;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import jakarta.persistence.PersistenceContext;
 import jakarta.inject.Named;
-import jakarta.transaction.Transactional;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
