@@ -1,5 +1,6 @@
 package web.beans;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.Destroyed;
 import jakarta.enterprise.context.Initialized;
 import jakarta.enterprise.context.SessionScoped;
@@ -9,6 +10,7 @@ import web.utils.Checker;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -16,6 +18,8 @@ import java.time.LocalDateTime;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+
+import javax.management.ObjectName;
 
 @Named("table")
 @NoArgsConstructor
@@ -31,6 +35,16 @@ public class TableHistoryBean implements Serializable {
 
     @Inject
     PointTracker pointTracker;
+
+    @PostConstruct
+    public void init(){
+        try {
+            ObjectName pointTrackerName = new ObjectName("web.beans:type=PointTracker");
+            ManagementFactory.getPlatformMBeanServer().registerMBean(pointTracker, pointTrackerName);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     public void addNewRow(){
         setData();

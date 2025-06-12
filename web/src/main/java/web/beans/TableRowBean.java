@@ -1,11 +1,15 @@
 package web.beans;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import lombok.Data;
 
+import javax.management.MalformedObjectNameException;
+import javax.management.ObjectName;
 import java.io.Serializable;
+import java.lang.management.ManagementFactory;
 import java.time.LocalDateTime;
 
 @Data
@@ -14,6 +18,16 @@ import java.time.LocalDateTime;
 public class TableRowBean implements Serializable {
     @Inject
     AreaCalculator areaCalculator;
+
+    @PostConstruct
+    public void init(){
+        try {
+            ObjectName areaCalculatorName = new ObjectName("web.beans:type=AreaCalculator");
+            ManagementFactory.getPlatformMBeanServer().registerMBean(areaCalculator, areaCalculatorName);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     private double x = 1;
     private double y = 1;
